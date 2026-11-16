@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Eclipse Simulator - media pembelajaran interaktif gerhana Matahari dan Bulan untuk kelas VIII SMP.">
+<title>Eclipse Simulator | Media Pembelajaran IPA</title>
+<style>
+:root{
+  --bg:#07111f;--panel:#101f33;--panel2:#142840;--line:#29415c;
+  --text:#edf5ff;--muted:#a9bbd0;--cyan:#64d8ee;--gold:#ffca70;
+  --blue:#77aefb;--pink:#e8a0c7;--green:#80ddb4;--danger:#ff9c9c;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(ellipse at 80% 0%,#172c49 0%,var(--bg) 50%);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.6}
+button,input{font:inherit}
+button{cursor:pointer}
+a{color:var(--cyan)}
+.topbar{position:sticky;top:0;z-index:20;background:rgba(7,17,31,.88);backdrop-filter:blur(14px);border-bottom:1px solid rgba(120,160,200,.18)}
+.nav{max-width:1180px;margin:auto;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.08em}
+.brand-mark{width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff4c8,#ffbd59 45%,#d86a35 72%);box-shadow:0 0 22px #ffb74d66}
+.navlinks{display:flex;gap:7px;flex-wrap:wrap}
+.navlinks button{border:1px solid transparent;background:transparent;color:var(--muted);padding:8px 13px;border-radius:999px;font-size:.9rem}
+.navlinks button.active,.navlinks button:hover{color:var(--text);background:#1b3552;border-color:#315778}
+main{max-width:1180px;margin:auto;padding:30px 22px 70px}
+.page{display:none;animation:fade .3s ease}.page.active{display:block}
+@keyframes fade{from{opacity:.2;transform:translateY(5px)}to{opacity:1;transform:none}}
+.hero{min-height:510px;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:24px}
+.eyebrow{color:var(--cyan);text-transform:uppercase;letter-spacing:.18em;font-size:.76rem;font-weight:800}
+h1{font-size:clamp(2.6rem,6vw,5.2rem);line-height:1.02;letter-spacing:-.055em;margin:14px 0}
+h1 span{color:var(--gold)}
+h2{font-size:clamp(1.7rem,3vw,2.5rem);line-height:1.15;margin:8px 0 14px}
+h3{margin:0 0 8px}
+.lead{font-size:1.1rem;color:var(--muted);max-width:620px}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:25px}
+.btn{border:0;border-radius:12px;padding:11px 17px;font-weight:750;background:linear-gradient(135deg,#65d9ed,#7bb8ff);color:#071421;box-shadow:0 8px 24px #4ccbe533}
+.btn.secondary{background:#1a3049;color:var(--text);border:1px solid #35516e;box-shadow:none}
+.btn.small{padding:8px 12px;font-size:.88rem}
+.hero-art{min-height:390px;position:relative;display:grid;place-items:center;overflow:hidden;border:1px solid #29425e;border-radius:28px;background:radial-gradient(circle at 50% 45%,#17395a 0,#0c1b2d 55%,#081321 100%)}
+.hero-art:before,.hero-art:after{content:"";position:absolute;border:1px solid #91c5e533;border-radius:50%;width:330px;height:160px;transform:rotate(-24deg)}
+.hero-art:after{width:420px;height:220px;transform:rotate(32deg)}
+.hero-sun{position:absolute;width:116px;height:116px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff4c8,#ffc45f 45%,#d76a32 78%);box-shadow:0 0 65px #ffb84c99}
+.hero-earth{position:absolute;width:74px;height:74px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#a7e6e7,#287bb0 55%,#163c75);transform:translate(115px,60px);box-shadow:0 0 25px #55baff55}
+.hero-moon{position:absolute;width:31px;height:31px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#eee,#777);transform:translate(65px,30px);box-shadow:0 0 18px #fff7}
+.hero-caption{position:absolute;bottom:18px;left:20px;color:#b8cce0;font-size:.82rem}
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.pill{border:1px solid #35516e;background:#10233a;border-radius:999px;padding:6px 11px;color:#c8d9eb;font-size:.8rem}
+.section-head{margin:15px 0 24px}
+.section-head p{color:var(--muted);max-width:760px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.card{background:linear-gradient(150deg,#142840,#0e1b2c);border:1px solid var(--line);border-radius:18px;padding:21px;box-shadow:0 12px 30px #0002}
+.card p{color:var(--muted);margin-bottom:0}
+.callout{border-left:3px solid var(--cyan);background:#10243a;padding:13px 16px;border-radius:0 12px 12px 0;color:#d8e8f8;margin:18px 0}
+.diagram{display:flex;align-items:center;justify-content:space-around;gap:8px;padding:22px 10px;background:#081625;border:1px solid #29415c;border-radius:14px;margin:15px 0;flex-wrap:wrap}
+.celestial{display:flex;align-items:center;gap:8px;flex-direction:column;font-size:.82rem;color:#cbd9e8}
+.orb{width:43px;height:43px;border-radius:50%;box-shadow:0 0 18px #ffffff18}
+.sun{background:radial-gradient(circle at 35% 30%,#fff2bd,#ffb83f 55%,#bd5129)}
+.earth{background:radial-gradient(circle at 30% 25%,#b2e9e5,#3286bc 55%,#163d76)}
+.moon{background:radial-gradient(circle at 35% 30%,#f5f5f5,#8b929d 65%,#4b5361)}
+.arrow{color:var(--gold);font-size:1.5rem}
+.sim-layout{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(270px,.8fr);gap:16px;align-items:start}
+.sim-stage{position:relative;background:radial-gradient(ellipse at 50% 50%,#142e49,#071321 75%);border:1px solid #29415c;border-radius:18px;overflow:hidden;min-height:470px}
+#simCanvas{display:block;width:100%;height:470px}
+.stage-label{position:absolute;top:14px;left:16px;pointer-events:none;color:#c6d8ea;font-size:.82rem;background:#071321b8;padding:6px 10px;border:1px solid #35516e;border-radius:9px}
+.stage-legend{position:absolute;bottom:12px;left:14px;right:14px;display:flex;gap:14px;flex-wrap:wrap;color:#c1d0df;font-size:.76rem;pointer-events:none}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}
+.control-card{display:flex;flex-direction:column;gap:14px}
+.control-card #resultCard{padding:15px;margin-top:0!important}
+.control-card #resultCard h3{font-size:1rem}
+.control-card #resultCard p{font-size:.86rem}
+.process-card{margin-top:16px;background:linear-gradient(135deg,#142840,#0b1b2d);border:1px solid #35516e;border-radius:18px;padding:18px}
+.process-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+.process-step{padding:12px;border:1px solid #35516e;border-radius:12px;background:#0a1929;color:#a9bbd0;font-size:.86rem}
+.process-step.active{border-color:var(--gold);background:#382d1c;color:#fff0cc;box-shadow:0 0 18px #ffca7022}
+.process-step b{display:block;color:inherit;margin-bottom:4px}
+.process-actions{display:flex;gap:9px;flex-wrap:wrap}
+#processExplanation{color:#dce9f7;margin:10px 0 0}
+@media(max-width:600px){.process-steps{grid-template-columns:1fr}}
+.control-group label{display:flex;justify-content:space-between;gap:8px;color:#dce9f7;font-weight:650;font-size:.9rem}
+select,input[type=range]{width:100%;margin-top:8px}
+select{background:#0a1929;color:var(--text);border:1px solid #3a5572;padding:10px;border-radius:10px}
+input[type=range]{accent-color:var(--cyan)}
+.value{color:var(--gold);font-variant-numeric:tabular-nums}
+.status{padding:12px;border-radius:12px;background:#102b32;border:1px solid #28645d;color:#c8f4e6;font-size:.9rem}
+.status.warn{background:#332719;border-color:#78582b;color:#ffe0aa}
+.small-note{font-size:.8rem;color:var(--muted)}
+.quiz-question{font-size:1.08rem;font-weight:700;margin-bottom:15px}
+.option{display:block;width:100%;text-align:left;padding:12px 14px;margin:8px 0;border-radius:11px;border:1px solid #35516e;background:#0b1b2d;color:var(--text)}
+.option:hover{border-color:var(--cyan);background:#142b43}
+.option.selected{border-color:var(--cyan);background:#15364a}
+.option.correct{border-color:var(--green);background:#12372f}
+.option.incorrect{border-color:var(--danger);background:#3b2028}
+.feedback{margin-top:12px;padding:12px;border-radius:10px;background:#10243a;color:#dce9f7}
+.quiz-top{display:flex;justify-content:space-between;color:var(--muted);font-size:.85rem}
+footer{border-top:1px solid #243a53;color:#849bb3;text-align:center;padding:22px;font-size:.82rem}
+@media(max-width:800px){.hero{grid-template-columns:1fr;padding:20px 0}.hero-art{min-height:300px}.sim-layout{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.nav{align-items:flex-start;flex-direction:column}.navlinks{width:100%}.navlinks button{padding:7px 10px}}
+@media(max-width:480px){main{padding:22px 14px 50px}.sim-stage{min-height:340px}#simCanvas{height:340px}.hero-art{min-height:260px}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <nav class="nav">
+    <div class="brand"><span class="brand-mark"></span><span>ECLIPSE <span style="color:var(--cyan)">SIMULATOR</span></span></div>
+    <div class="navlinks" aria-label="Navigasi utama">
+      <button class="active" data-page="home">Home</button>
+      <button data-page="materi">Materi</button>
+      <button data-page="simulasi">Simulasi 3D</button>
+      <button data-page="kuis">Kuis</button>
+    </div>
+  </nav>
+</header>
+<main>
+<section id="home" class="page active">
+  <div class="hero">
+    <div>
+      <div class="eyebrow">Media Pembelajaran IPA · Kelas VIII SMP</div>
+      <h1>Explore the<br><span>Eclipse.</span></h1>
+      <p class="lead">Pelajari bagaimana posisi Matahari, Bumi, dan Bulan menghasilkan gerhana melalui materi ringkas dan simulasi tiga dimensi yang dapat kamu kendalikan.</p>
+      <div class="actions">
+        <button class="btn" data-goto="simulasi">Mulai Simulasi 3D →</button>
+        <button class="btn secondary" data-goto="materi">Pelajari Materi</button>
+      </div>
+      <div class="pills"><span class="pill">Model 3D interaktif</span><span class="pill">Kontrol posisi Bulan</span><span class="pill">Kuis pemahaman</span></div>
+    </div>
+    <div class="hero-art" aria-label="Ilustrasi Matahari, Bumi, dan Bulan">
+      <div class="hero-sun"></div><div class="hero-earth"></div><div class="hero-moon"></div>
+      <div class="hero-caption">Matahari · Bumi · Bulan</div>
+    </div>
+  </div>
+  <div class="grid">
+    <article class="card"><h3>☀ Gerhana Matahari</h3><p>Terjadi ketika Bulan berada di antara Matahari dan Bumi sehingga bayangan Bulan jatuh pada sebagian permukaan Bumi.</p></article>
+    <article class="card"><h3>🌑 Gerhana Bulan</h3><p>Terjadi ketika Bumi berada di antara Matahari dan Bulan sehingga Bulan memasuki bayangan Bumi.</p></article>
+  </div>
+</section>
+
+<section id="materi" class="page">
+  <div class="section-head"><div class="eyebrow">01 · Learning material</div><h2>Memahami fenomena gerhana</h2><p>Gerhana berkaitan dengan perambatan cahaya dan posisi relatif tiga benda langit: Matahari, Bumi, dan Bulan.</p></div>
+  <div class="grid">
+    <article class="card">
+      <h3>☀ Gerhana Matahari</h3>
+      <div class="diagram">
+        <div class="celestial"><span class="orb sun"></span>Matahari</div><span class="arrow">→</span>
+        <div class="celestial"><span class="orb moon"></span>Bulan</div><span class="arrow">→</span>
+        <div class="celestial"><span class="orb earth"></span>Bumi</div>
+      </div>
+      <p>Gerhana Matahari terjadi ketika Bulan berada di antara Matahari dan Bumi. Bulan menghalangi sebagian cahaya Matahari dan bayangannya jatuh pada permukaan Bumi.</p>
+      <div class="callout">Urutan posisi: <b>Matahari – Bulan – Bumi.</b></div>
+    </article>
+    <article class="card">
+      <h3>🌕 Gerhana Bulan</h3>
+      <div class="diagram">
+        <div class="celestial"><span class="orb sun"></span>Matahari</div><span class="arrow">→</span>
+        <div class="celestial"><span class="orb earth"></span>Bumi</div><span class="arrow">→</span>
+        <div class="celestial"><span class="orb moon"></span>Bulan</div>
+      </div>
+      <p>Gerhana Bulan terjadi ketika Bumi berada di antara Matahari dan Bulan. Bayangan Bumi jatuh pada Bulan sehingga Bulan tampak gelap sebagian atau seluruhnya.</p>
+      <div class="callout">Urutan posisi: <b>Matahari – Bumi – Bulan.</b></div>
+    </article>
+  </div>
+  <div class="grid" style="margin-top:16px">
+    <article class="card"><h3>Umbra dan penumbra</h3><p><b>Umbra</b> adalah daerah bayangan inti yang tidak menerima cahaya langsung dari sumber cahaya. <b>Penumbra</b> adalah daerah bayangan samar yang masih menerima sebagian cahaya.</p></article>
+    <article class="card"><h3>Mengapa gerhana tidak terjadi setiap bulan?</h3><p>Bidang orbit Bulan miring sekitar 5° terhadap bidang orbit Bumi mengelilingi Matahari. Karena itu, saat Bulan baru atau purnama, ketiganya tidak selalu berada pada satu garis yang cukup sejajar.</p></article>
+  </div>
+  <div class="callout"><b>Ingat:</b> model ini menyederhanakan ukuran, jarak, dan gerak benda langit. Gerhana hanya dapat terjadi ketika posisi ketiganya cukup segaris pada fase Bulan yang sesuai.</div>
+  <button class="btn" data-goto="simulasi">Coba Simulasi →</button>
+</section>
+
+<section id="simulasi" class="page">
+  <div class="section-head"><div class="eyebrow">02 · Interactive 3D lab</div><h2>Atur posisi benda langit</h2><p>Pilih jenis gerhana, ubah sudut posisi Bulan, lalu amati bagaimana keselarasan benda langit memengaruhi kemungkinan terjadinya gerhana.</p></div>
+  <div class="sim-layout">
+    <div class="sim-stage">
+      <canvas id="simCanvas"></canvas>
+      <div class="stage-label" id="stageLabel">Tampilan 3D · Gerhana Matahari</div>
+      <div class="stage-legend">
+        <span><i class="dot" style="background:#ffbd59"></i>Matahari</span>
+        <span><i class="dot" style="background:#398bc5"></i>Bumi</span>
+        <span><i class="dot" style="background:#b8c0cc"></i>Bulan</span>
+        <span><i class="dot" style="background:#9a83e8"></i>Bayangan konseptual</span>
+      </div>
+    </div>
+    <aside class="card control-card">
+      <h3>Panel kontrol</h3>
+      <div class="control-group">
+        <label for="eclipseType">Jenis simulasi</label>
+        <select id="eclipseType"><option value="solar">Gerhana Matahari</option><option value="lunar">Gerhana Bulan</option></select>
+      </div>
+      <div class="control-group">
+        <label for="angle">Sudut posisi Bulan <span class="value" id="angleValue">0°</span></label>
+        <input id="angle" type="range" min="-30" max="30" value="0" step="1">
+        <div class="small-note">Geser untuk mengubah keselarasan. Sudut 0° menunjukkan susunan segaris pada model.</div>
+      </div>
+      <div class="actions" style="margin-top:0">
+        <button class="btn small" id="playBtn">▶ Animasi</button>
+        <button class="btn secondary small" id="resetBtn">Atur ulang</button>
+      </div>
+      <div id="alignmentStatus" class="status">Posisi cukup sejajar: simulasi gerhana dapat diamati.</div>
+  <div class="process-card" id="resultCard" aria-live="polite" style="margin-top:0">
+    <div class="eyebrow">Hasil simulasi</div>
+    <h3 id="resultTitle">Gerhana Matahari terjadi</h3>
+    <p id="resultSummary">Bulan berada di antara Matahari dan Bumi. Bulan menghalangi cahaya Matahari sehingga bayangannya jatuh ke Bumi.</p>
+    <div style="margin-top:12px">
+      <h3 style="font-size:.98rem">Ke mana bayangannya jatuh?</h3>
+      <p id="shadowResult">Bayangan Bulan jatuh ke permukaan Bumi. Daerah Bumi yang terkena bayangan menjadi tempat orang dapat melihat Matahari tertutup.</p>
+    </div>
+    <div style="margin-top:12px">
+      <h3 style="font-size:.98rem">Mengapa terjadi?</h3>
+      <p id="causeResult">Karena urutannya adalah Matahari–Bulan–Bumi. Bulan berada di tengah dan menghalangi cahaya Matahari.</p>
+    </div>
+    <p class="small-note" style="margin:12px 0 0">Catatan: gambar bayangan pada simulasi merupakan gambaran sederhana untuk membantu memahami proses gerhana.</p>
+  </div>
+      <div>
+        <h3 style="font-size:1rem">Amati gambar 3D</h3>
+        <p id="explanation" class="small-note">Perhatikan benda langit yang berada di tengah dan arah bayangannya.</p>
+      </div>
+    </aside>
+  </div>
+  <div class="process-card">
+    <h3>Amati proses terjadinya gerhana</h3>
+    <p class="small-note">Ikuti tiga tahap berikut untuk melihat hubungan antara posisi benda langit, terhalangnya cahaya Matahari, dan jatuhnya bayangan.</p>
+    <div class="process-steps">
+      <div class="process-step active" id="step0"><b>1. Posisi benda langit</b>Ketiganya berada pada satu garis atau hampir segaris.</div>
+      <div class="process-step" id="step1"><b>2. Cahaya terhalang</b>Benda langit di tengah menghalangi cahaya Matahari.</div>
+      <div class="process-step" id="step2"><b>3. Bayangan terbentuk</b>Bayangan jatuh pada benda langit yang mengalami gerhana.</div>
+    </div>
+    <div class="process-actions">
+      <button class="btn small" id="processPlay">▶ Putar proses</button>
+      <button class="btn secondary small" id="processPrev">← Sebelumnya</button>
+      <button class="btn secondary small" id="processNext">Tahap berikutnya →</button>
+    </div>
+    <p id="processExplanation">Tahap 1: Atur sudut Bulan mendekati 0° agar Matahari, Bumi, dan Bulan berada pada posisi hampir segaris.</p>
+  </div>
+
+</section>
+
+<section id="kuis" class="page">
+  <div class="section-head"><div class="eyebrow">03 · Check your understanding</div><h2>Kuis pemahaman konsep</h2><p>Pilih satu jawaban yang paling tepat. Setelah menjawab, baca umpan balik untuk mengetahui alasan jawabannya.</p></div>
+  <div class="card" style="max-width:760px">
+    <div class="quiz-top"><span id="questionCount">Pertanyaan 1 dari 5</span><span id="scoreLabel">Skor: 0</span></div>
+    <div style="height:6px;background:#263c55;border-radius:9px;margin:12px 0 22px;overflow:hidden"><div id="progress" style="height:100%;width:20%;background:linear-gradient(90deg,var(--cyan),var(--blue));transition:width .2s"></div></div>
+    <div id="question" class="quiz-question"></div>
+    <div id="options"></div>
+    <div id="feedback" class="feedback" style="display:none"></div>
+    <div class="actions"><button id="nextBtn" class="btn" disabled>Berikutnya →</button><button id="restartQuiz" class="btn secondary">Ulangi kuis</button></div>
+  </div>
+</section>
+</main>
+<footer>Eclipse Simulator · Media Pembelajaran IPA Kelas VIII SMP<br>Model konseptual untuk pembelajaran; tidak menggunakan skala ukuran dan jarak astronomis.</footer>
+
+<script type="module">
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+
+const pages = document.querySelectorAll('.page');
+function showPage(id){
+  pages.forEach(p=>p.classList.toggle('active',p.id===id));
+  document.querySelectorAll('.navlinks button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));
+  if(id==='simulasi') setTimeout(resizeRenderer,60);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('[data-page]').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
+document.querySelectorAll('[data-goto]').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.goto)));
+
+// Three.js scene
+const canvas=document.getElementById('simCanvas');
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+renderer.shadowMap.enabled=true;
+renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+renderer.outputColorSpace=THREE.SRGBColorSpace;
+const scene=new THREE.Scene();
+scene.background=new THREE.Color(0x071321);
+const camera=new THREE.PerspectiveCamera(42,1,0.1,100);
+camera.position.set(0,5.2,13.8);
+camera.lookAt(0,0,0);
+scene.add(new THREE.AmbientLight(0x9db9d8,0.72));
+const sunLight=new THREE.PointLight(0xffd18a,180,40,1.4);
+sunLight.position.set(-7,0,0);sunLight.castShadow=true;
+sunLight.shadow.mapSize.set(1024,1024);scene.add(sunLight);
+
+const sphereGeo=new THREE.SphereGeometry(1,48,32);
+const sun=new THREE.Mesh(sphereGeo,new THREE.MeshStandardMaterial({color:0xffb83f,emissive:0xff8b25,emissiveIntensity:1.1,roughness:.8}));
+sun.scale.setScalar(1.05);sun.position.set(-7,0,0);scene.add(sun);
+const sunGlow=new THREE.PointLight(0xffb34d,1.4,6);sunGlow.position.copy(sun.position);scene.add(sunGlow);
+
+const earthMat=new THREE.MeshStandardMaterial({color:0x287eb6,roughness:.82,metalness:.02});
+const earth=new THREE.Mesh(sphereGeo,earthMat);earth.scale.setScalar(.78);earth.castShadow=true;earth.receiveShadow=true;scene.add(earth);
+const moonMat=new THREE.MeshStandardMaterial({color:0xaeb6c1,roughness:1});
+const moon=new THREE.Mesh(sphereGeo,moonMat);moon.scale.setScalar(.27);moon.castShadow=true;moon.receiveShadow=true;scene.add(moon);
+
+const starsGeo=new THREE.BufferGeometry();const starPos=[];
+for(let i=0;i<550;i++){starPos.push((Math.random()-.5)*34,(Math.random()-.5)*20,(Math.random()-.5)*18-5)}
+starsGeo.setAttribute('position',new THREE.Float32BufferAttribute(starPos,3));
+const stars=new THREE.Points(starsGeo,new THREE.PointsMaterial({color:0xa9c9e8,size:.035,transparent:true,opacity:.8}));
+scene.add(stars);
+
+const orbitGeo=new THREE.BufferGeometry();
+const orbitPoints=[];
+for(let i=0;i<=100;i++){const a=i/100*Math.PI*2;orbitPoints.push(new THREE.Vector3(Math.cos(a)*2.35,Math.sin(a)*2.35,0))}
+orbitGeo.setFromPoints(orbitPoints);
+const orbitLine=new THREE.Line(orbitGeo,new THREE.LineBasicMaterial({color:0x5d86ac,transparent:true,opacity:.45}));
+scene.add(orbitLine);
+
+// Conceptual transparent shadow cones extending from occulting body toward target.
+function makeCone(color,opacity,radius,length){
+  const mesh=new THREE.Mesh(new THREE.ConeGeometry(radius,length,40,1,true),new THREE.MeshBasicMaterial({color,transparent:true,opacity,depthWrite:false,side:THREE.DoubleSide}));
+  mesh.visible=false;scene.add(mesh);return mesh;
+}
+const penumbra=makeCone(0x9b8be8,.13,.62,2.4);
+const umbra=makeCone(0x6e5ac5,.30,.24,2.4);
+// Penanda area tempat bayangan mengenai Bumi atau Bulan (konseptual).
+const shadowMarker=new THREE.Mesh(new THREE.CircleGeometry(.19,48),new THREE.MeshBasicMaterial({color:0x171326,transparent:true,opacity:.88,side:THREE.DoubleSide,depthWrite:false}));
+shadowMarker.visible=false;scene.add(shadowMarker);
+const markerRing=new THREE.Mesh(new THREE.RingGeometry(.19,.25,48),new THREE.MeshBasicMaterial({color:0xb9a7ff,transparent:true,opacity:.95,side:THREE.DoubleSide,depthWrite:false}));
+markerRing.visible=false;scene.add(markerRing);
+const rayMaterial=new THREE.LineBasicMaterial({color:0xffe6a6,transparent:true,opacity:.7});
+const lightRays=[];
+for(let i=-1;i<=1;i++){const g=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-6.0,i*.42,0.15),new THREE.Vector3(-2.7,i*.42,0.15)]);const line=new THREE.Line(g,rayMaterial);line.visible=false;scene.add(line);lightRays.push(line)}
+function placeCone(mesh,start,end){
+  const dir=new THREE.Vector3().subVectors(end,start);
+  mesh.position.copy(start).addScaledVector(dir,.5);
+  mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),dir.clone().normalize());
+  mesh.scale.set(1,dir.length()/2.4,1);
+  mesh.visible=true;
+}
+let mode='solar',angle=0,animating=false,animDir=1,last=0,processPhase=0,processTimer=0,processPlaying=false;
+const angleInput=document.getElementById('angle');
+const angleValue=document.getElementById('angleValue');
+const statusBox=document.getElementById('alignmentStatus');
+const explanation=document.getElementById('explanation');
+const stageLabel=document.getElementById('stageLabel');
+function updateScene(){
+  const rad=THREE.MathUtils.degToRad(angle);
+  const earthPos=new THREE.Vector3(0,0,0);
+  let moonPos=new THREE.Vector3();
+  if(mode==='solar'){
+    moonPos.set(-2.35*Math.cos(rad),2.35*Math.sin(rad),0);
+    earth.position.copy(earthPos);moon.position.copy(moonPos);
+    placeCone(penumbra,new THREE.Vector3(moonPos.x+.18,moonPos.y,0),new THREE.Vector3(.15,moonPos.y*.25,0));
+    placeCone(umbra,new THREE.Vector3(moonPos.x+.18,moonPos.y,0),new THREE.Vector3(.05,moonPos.y*.25,0));
+    stageLabel.textContent='Tampilan 3D · Gerhana Matahari';
+    explanation.textContent=Math.abs(angle)<=5?'Bulan berada hampir segaris di antara Matahari dan Bumi. Bayangan Bulan diarahkan menuju Bumi.':'Bulan bergeser dari garis Matahari–Bumi. Keselarasan berkurang sehingga bayangan tidak tepat mengarah ke Bumi.';
+  }else{
+    moonPos.set(2.35*Math.cos(rad),2.35*Math.sin(rad),0);
+    earth.position.copy(earthPos);moon.position.copy(moonPos);
+    placeCone(penumbra,new THREE.Vector3(.42,0,0),new THREE.Vector3(moonPos.x-.2,moonPos.y,0));
+    placeCone(umbra,new THREE.Vector3(.42,0,0),new THREE.Vector3(moonPos.x-.2,moonPos.y,0));
+    stageLabel.textContent='Tampilan 3D · Gerhana Bulan';
+    explanation.textContent=Math.abs(angle)<=5?'Bumi berada hampir segaris di antara Matahari dan Bulan. Bayangan Bumi mengarah menuju Bulan.':'Bulan bergeser dari garis Matahari–Bumi. Bulan tidak berada pada jalur bayangan inti dalam model.';
+  }
+  // Cahaya, volume bayangan, dan penanda target ditampilkan bertahap.
+  const aligned=Math.abs(angle)<=5;
+  const showBlocking=processPhase>=1 && aligned;
+  penumbra.visible=showBlocking;umbra.visible=showBlocking && processPhase>=2;
+  lightRays.forEach((ray,i)=>{
+    ray.visible=processPhase>=1;
+    const y=(i-1)*.42;
+    const blockerX=mode==='solar'?moonPos.x-.28:-.82;
+    ray.geometry.setFromPoints([new THREE.Vector3(-6.0,y,0.18),new THREE.Vector3(blockerX,y,0.18)]);
+  });
+  const markerPos=mode==='solar'?new THREE.Vector3(-.70,0,.22):new THREE.Vector3(moonPos.x-.20,0,.29);
+  shadowMarker.position.copy(markerPos);markerRing.position.copy(markerPos);
+  shadowMarker.visible=processPhase>=2 && aligned;markerRing.visible=processPhase>=2 && aligned;
+  angleValue.textContent=angle+'°';
+  angleInput.value=angle;
+  statusBox.classList.toggle('warn',!aligned);
+  statusBox.textContent=aligned?'Posisi cukup sejajar: kondisi gerhana dapat disimulasikan.':'Belum cukup sejajar: posisi Bulan menyimpang dari garis utama.';
+  [0,1,2].forEach(i=>document.getElementById('step'+i).classList.toggle('active',i===processPhase));
+  const processText=mode==='solar'?[
+    'Tahap 1: Bulan berada di antara Matahari dan Bumi. Pada posisi ini, Bulan dapat menghalangi cahaya Matahari.',
+    'Tahap 2: Cahaya Matahari terhalang oleh Bulan. Karena itu, terbentuk bayangan di belakang Bulan.',
+    'Tahap 3: Bayangan Bulan jatuh ke Bumi. Daerah yang terkena bayangan dapat mengalami gerhana Matahari.'
+  ]:[
+    'Tahap 1: Bumi berada di antara Matahari dan Bulan. Pada posisi ini, Bumi dapat menghalangi cahaya Matahari.',
+    'Tahap 2: Cahaya Matahari terhalang oleh Bumi. Karena itu, terbentuk bayangan di belakang Bumi.',
+    'Tahap 3: Bayangan Bumi jatuh ke Bulan. Bulan yang terkena bayangan tampak lebih gelap. Inilah gerhana Bulan.'
+  ];
+  document.getElementById('processExplanation').textContent=aligned?processText[processPhase]:'Posisi belum cukup sejajar. Atur sudut Bulan mendekati 0° untuk memperlihatkan jalur bayangan gerhana.';
+  updateResult(aligned);
+}
+function updateResult(aligned){
+  const title=document.getElementById('resultTitle');
+  const summary=document.getElementById('resultSummary');
+  const shadow=document.getElementById('shadowResult');
+  const cause=document.getElementById('causeResult');
+  if(!aligned){
+    title.textContent='Belum terjadi gerhana';
+    summary.textContent='Pada posisi ini, Bulan belum berada pada jalur yang tepat. Bayangan tidak mengenai Bumi atau Bulan, sehingga gerhana belum terlihat pada simulasi.';
+    if(mode==='solar'){
+      shadow.textContent='Bulan menghalangi cahaya Matahari, tetapi bayangannya meleset dan tidak jatuh ke permukaan Bumi. Jadi, gerhana Matahari belum terjadi pada simulasi ini.';
+      cause.textContent='Agar terjadi gerhana Matahari, Bulan harus berada di antara Matahari dan Bumi serta bayangannya harus mengenai Bumi. Pada posisi ini, Bulan terlalu bergeser.';
+    }else{
+      shadow.textContent='Bumi menghalangi cahaya Matahari, tetapi bayangannya tidak mengenai Bulan. Jadi, Bulan belum masuk ke dalam bayangan Bumi.';
+      cause.textContent='Agar terjadi gerhana Bulan, Bumi harus berada di antara Matahari dan Bulan sehingga bayangan Bumi mengenai Bulan. Pada posisi ini, Bulan terlalu bergeser.';
+    }
+    return;
+  }
+  if(mode==='solar'){
+    title.textContent='Gerhana Matahari terjadi';
+    summary.textContent='Bulan berada di antara Matahari dan Bumi. Bulan menghalangi cahaya Matahari sehingga bayangannya jatuh ke permukaan Bumi.';
+    shadow.textContent='Bayangan Bulan jatuh ke permukaan Bumi. Orang yang berada di daerah tersebut akan melihat Matahari tertutup. Ada daerah yang melihat Matahari tertutup sebagian dan ada daerah yang melihatnya tertutup seluruhnya.';
+    cause.textContent='Gerhana Matahari terjadi karena posisi Matahari–Bulan–Bumi hampir segaris, dengan Bulan berada di tengah. Bulan menghalangi cahaya Matahari yang menuju Bumi.';
+  }else{
+    title.textContent='Gerhana Bulan terjadi';
+    summary.textContent='Bumi berada di antara Matahari dan Bulan. Bumi menghalangi cahaya Matahari sehingga bayangannya jatuh ke Bulan.';
+    shadow.textContent='Bayangan Bumi jatuh ke permukaan Bulan. Saat Bulan masuk ke dalam bayangan tersebut, sebagian atau seluruh permukaan Bulan tampak lebih gelap dari biasanya.';
+    cause.textContent='Gerhana Bulan terjadi karena posisi Matahari–Bumi–Bulan hampir segaris, dengan Bumi berada di tengah. Bumi menghalangi cahaya Matahari yang menuju Bulan.';
+  }
+}
+function setProcessPhase(next){processPhase=Math.max(0,Math.min(2,next));updateScene()}
+document.getElementById('processPrev').addEventListener('click',()=>setProcessPhase(processPhase-1));
+document.getElementById('processNext').addEventListener('click',()=>setProcessPhase(processPhase+1));
+document.getElementById('processPlay').addEventListener('click',()=>{processPhase=0;updateScene();processTimer=0;processPlaying=true;document.getElementById('processPlay').textContent='Ⅱ Proses berjalan';});
+document.getElementById('eclipseType').addEventListener('change',e=>{mode=e.target.value;processPhase=0;updateScene()});
+angleInput.addEventListener('input',e=>{angle=Number(e.target.value);updateScene()});
+document.getElementById('resetBtn').addEventListener('click',()=>{angle=0;animating=false;processPhase=0;document.getElementById('playBtn').textContent='▶ Animasi';document.getElementById('processPlay').textContent='▶ Putar proses';processPlaying=false;updateScene()});
+document.getElementById('playBtn').addEventListener('click',()=>{
+  animating=!animating;document.getElementById('playBtn').textContent=animating?'Ⅱ Jeda':'▶ Animasi';
+});
+function resizeRenderer(){
+  const w=canvas.clientWidth||640,h=canvas.clientHeight||470;
+  renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();
+}
+window.addEventListener('resize',resizeRenderer);
+resizeRenderer();updateScene();
+function render(t){
+  requestAnimationFrame(render);
+  const dt=Math.min((t-last)/1000||0,.05);last=t;
+  earth.rotation.y+=dt*.16;moon.rotation.y+=dt*.28;
+  if(animating){angle+=animDir*dt*18;if(angle>30){angle=30;animDir=-1}if(angle< -30){angle=-30;animDir=1}updateScene()}
+  if(processPlaying){processTimer+=dt;if(processTimer>1.8){processTimer=0;if(processPhase<2)setProcessPhase(processPhase+1);else{processPlaying=false;document.getElementById('processPlay').textContent='↻ Putar ulang';}}}
+  renderer.render(scene,camera);
+}
+requestAnimationFrame(render);
+
+// Quiz
+const questions=[
+ {q:'Susunan benda langit yang tepat saat gerhana Matahari adalah ....',o:['Matahari–Bumi–Bulan','Matahari–Bulan–Bumi','Bulan–Matahari–Bumi','Bumi–Bulan–Matahari'],a:1,e:'Bulan berada di antara Matahari dan Bumi sehingga bayangan Bulan dapat jatuh pada Bumi.'},
+ {q:'Pada gerhana Bulan, benda langit yang menghalangi cahaya Matahari menuju Bulan adalah ....',o:['Matahari','Bulan','Bumi','Planet lain'],a:2,e:'Bumi berada di antara Matahari dan Bulan. Bayangan Bumi kemudian jatuh pada Bulan.'},
+ {q:'Daerah bayangan inti yang tidak menerima cahaya langsung disebut ....',o:['Orbit','Penumbra','Umbra','Atmosfer'],a:2,e:'Umbra merupakan daerah bayangan inti. Penumbra adalah daerah bayangan samar yang masih menerima sebagian cahaya.'},
+ {q:'Mengapa gerhana tidak terjadi setiap bulan?',o:['Bulan tidak memantulkan cahaya','Bidang orbit Bulan miring terhadap bidang orbit Bumi','Matahari padam setiap bulan','Bumi berhenti berotasi'],a:1,e:'Kemiringan bidang orbit Bulan membuat ketiga benda langit tidak selalu cukup segaris pada setiap fase Bulan baru atau purnama.'},
+ {q:'Ketika posisi Bulan bergeser jauh dari garis Matahari–Bumi, apa yang terjadi pada kemungkinan gerhana Matahari?',o:['Kemungkinan meningkat','Tidak berubah','Keselarasan berkurang','Bumi berhenti menerima cahaya'],a:2,e:'Gerhana memerlukan keselarasan posisi. Jika Bulan menyimpang dari garis utama, bayangannya tidak tepat mengenai Bumi.'}
+];
+let qi=0,score=0,answered=false;
+const qEl=document.getElementById('question'),optsEl=document.getElementById('options'),feedbackEl=document.getElementById('feedback'),nextBtn=document.getElementById('nextBtn');
+function renderQuestion(){
+ answered=false;nextBtn.disabled=true;feedbackEl.style.display='none';
+ document.getElementById('questionCount').textContent=`Pertanyaan ${qi+1} dari ${questions.length}`;
+ document.getElementById('scoreLabel').textContent=`Skor: ${score}`;
+ document.getElementById('progress').style.width=((qi+1)/questions.length*100)+'%';
+ const q=questions[qi];qEl.textContent=q.q;optsEl.innerHTML='';
+ q.o.forEach((opt,i)=>{const b=document.createElement('button');b.className='option';b.textContent=String.fromCharCode(65+i)+'. '+opt;b.addEventListener('click',()=>choose(i));optsEl.appendChild(b)});
+ nextBtn.textContent=qi===questions.length-1?'Lihat hasil':'Berikutnya →';
+}
+function choose(i){
+ if(answered)return;answered=true;const q=questions[qi];const buttons=[...optsEl.children];
+ buttons.forEach((b,j)=>{b.disabled=true;if(j===q.a)b.classList.add('correct');else if(j===i)b.classList.add('incorrect')});
+ if(i===q.a)score++;
+ document.getElementById('scoreLabel').textContent=`Skor: ${score}`;
+ feedbackEl.style.display='block';feedbackEl.textContent=(i===q.a?'Benar! ':'Belum tepat. ')+q.e;nextBtn.disabled=false;
+}
+nextBtn.addEventListener('click',()=>{
+ if(!answered)return;
+ if(qi<questions.length-1){qi++;renderQuestion()}
+ else{qEl.textContent=`Kuis selesai! Skor kamu ${score} dari ${questions.length} (${Math.round(score/questions.length*100)}%).`;optsEl.innerHTML='';feedbackEl.style.display='block';feedbackEl.textContent=score>=4?'Bagus! Kamu sudah memahami konsep utama gerhana.':'Pelajari kembali materi, lalu coba ulangi kuis.';nextBtn.disabled=true;nextBtn.textContent='Selesai';document.getElementById('questionCount').textContent='Hasil akhir';document.getElementById('progress').style.width='100%'}
+});
+document.getElementById('restartQuiz').addEventListener('click',()=>{qi=0;score=0;renderQuestion()});
+renderQuestion();
+</script>
+</body>
+</html>
